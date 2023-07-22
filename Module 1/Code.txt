@@ -1,0 +1,33 @@
+
+int led = 13;                // LED Pin declared
+int sensor = 2;              // Sensor pin declared
+int state = LOW;             // Default state of sensor
+int val = 0;                 // Store sensor val
+
+void setup() {
+  pinMode(led, OUTPUT);      // initalize LED outpu
+  pinMode(sensor, INPUT);    // initialize sensor as an input
+  Serial.begin(9600);        // initialize serial
+}
+
+void loop(){
+  val = digitalRead(sensor);   // read val off the sensor 
+  if (val == HIGH) {           // condition to check sensore val
+    digitalWrite(led, HIGH);   // turn on LED if condition met 
+    delay(100);                // delay 
+    
+    if (state == LOW) {
+      Serial.println("Movment Found"); 
+      state = HIGH;       // seccond condition  
+    }
+  } 
+  else {
+      digitalWrite(led, LOW); // switch off LED
+      delay(200);             // delay  
+      
+      if (state == HIGH){
+        Serial.println("Movment Lost");
+        state = LOW;       // update variable state to LOW
+    }
+  }
+}
